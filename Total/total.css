@@ -1,0 +1,488 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Header styles */
+  header {
+    width: 100%;
+    height: 14.5vh;
+    background-color: black;
+    display: flex;
+    align-items: center;
+  }
+  header h1 {
+    color: white;
+    margin-left: 9.2vh;
+  }
+  
+  /* Main layout styles */
+  .big {
+    width: 100%;
+    height: 85.5vh;
+    display: flex;
+    flex-direction: row;
+  }
+  .big .for_menu {
+    height: 100%;
+    background-color: black;
+  }
+  .big .for_menu i {
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    font-size: 36px;
+    margin: 0 3vh;
+    margin-top: 2vh;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  .big .for_menu i.active {
+    display: none;
+  }
+  .big .for_menu i:hover {
+    color: #424242;
+    transform: scale(1.1);
+  }
+  .big .for_menu_links {
+    display: none;
+    margin: 0 45px;
+    margin-top: 2vh;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 1s ease, max-height 1s ease;
+  }
+  .big .for_menu_links.active {
+    display: block;
+    opacity: 1;
+    max-height: 500px;
+  }
+  .big .for_menu .inactive_menu_bar {
+    color: white;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .big .for_menu .inactive_menu_bar .left_row_icon {
+    cursor: pointer;
+  }
+  .big .for_menu .menu_links {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 200px;
+    margin-top: 20px;
+  }
+  .big .for_menu .menu_links_item {
+    text-decoration: none;
+    color: white;
+    font-size:large;
+  }
+  .big .for_menu .menu_links_item:hover {
+    color: #606060;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Main part styles */
+  .big .main_part {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .big .main_part .for_main {
+    width: 40%;
+    height: 90%;
+    background-color: white;
+  }
+  
+  /* Search section styles */
+  .big .main_part .for_main .search {
+    width: 100%;
+    height: 14vh;
+    display: flex;
+    align-items: center;
+  }
+  
+  .big .main_part .for_main .search input {
+    width: 70%;
+    height: 5vh;
+    border-radius: 5px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .big .main_part .for_main .search input:focus {
+    border-color: #000000;
+    box-shadow: 0 0 5px rgba(124, 124, 124, 0.5);
+  }
+  
+  .big .main_part .for_main .search button {
+    width: 50%;
+    height: 6vh;
+    border-radius: 5px;
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-left: 10px;
+  }
+  
+  .big .main_part .for_main .search button:hover {
+    background-color: #000000;
+    transform: scale(1.05);
+  }
+  
+  /* Info section styles */
+  .big .main_part .for_main .for_info {
+    width: 100%;
+    height: calc(90% - 70px); /* Adjusted height */
+    border: 1px solid #e6e6e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Hide overflow for the container */
+    border-radius: 8px;
+  }
+  
+  /* Ensure the table is scrollable within its container */
+  .big .main_part .for_main .for_info .info {
+    width: 100%;
+    height: 100%; /* Full height of the container */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  /* Table styles */
+/* Modal styles */
+/* Modal styles */
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal content styles */
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 700px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close button styles */
+.close-btn {
+  color: #333;
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: red;
+}
+
+/* Table styles */
+#transactionTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Makes columns responsive */
+}
+
+#transactionTable th, #transactionTable td {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  display: block; /* Make each cell behave as a block element */
+}
+
+#transactionTable th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/* Add hover effect on table rows */
+#transactionTable tbody tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Create a pseudo-vertical view: Cells will be stacked vertically */
+#transactionTable td {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Separate rows visually, but still keep them in a table-like structure */
+#transactionTable td:before {
+  content: attr(data-label);
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+#transactionTable td {
+  padding-left: 0; /* Removes extra space from left */
+}
+
+
+/* Animation for modal appearance */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+/* General container for positioning */
+.for_main {
+  display: flex;
+  justify-content: flex-start; /* Align items to the left, rather than spreading them out */
+  align-items: center; /* Vertically aligns the items */
+  width: 100px; /* Reduces space between child elements of .for_main */
+}
+
+/* Ensures the date button is at the left */
+.search {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Reduces space between the date button and dropdown */
+}
+
+/* Buttons section on the right side */
+.butt {
+  display: flex;
+  flex-direction: column; /* Align items vertically */
+  justify-content: flex-start; /* Align items to the top */
+  gap: 5px; /* Reduces space between the buttons */
+}
+
+/* Adjust dropdown and buttons for consistent styling */
+#dateDropdown {
+  position: absolute;
+  top: 100%; /* Positions dropdown just below the button */
+  left: 0;
+  display: none;
+  z-index: 1;
+}
+
+/* Style the individual buttons */
+button {
+  width: 150%;
+  height: 6vh;
+  padding: 6px 12px; /* Reduced padding for smaller buttons */
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+
+
+
+
+
+
+
+  
+  @media (max-width: 1024px) {
+    .big {
+      flex-direction: column;
+      height: auto;
+    }
+  
+    .big .for_menu {
+      width: 100%;
+      height: auto;
+    }
+  
+    .big .main_part {
+      width: 100%;
+      height: auto;
+    }
+  
+    .big .main_part .for_main .search input,
+    .big .main_part .for_main .search button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    #OrdersTable th, #OrdersTable td {
+      padding: 10px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    header {
+      height: 12vh;
+    }
+  
+    header h1 {
+      font-size: 18px;
+      margin-left: 20px;
+    }
+  
+    .big .for_menu i {
+      font-size: 28px;
+    }
+  
+    .big .for_menu .menu_links {
+      width: 100%;
+    }
+  
+    .big .main_part .for_main .search {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .big .main_part .for_main .search input,
+    .big .main_part .for_main .search button {
+      width: 100%;
+    }
+  
+    .big .main_part .for_main .for_info {
+      height: auto;
+    }
+  
+    #OrdersTable th, #OrdersTable td {
+      font-size: 14px;
+    }
+  
+    #OrdersTable {
+      min-width: auto;
+    }
+    .total-price-container {
+      width: 125%;
+      border-collapse: collapse;
+      background: linear-gradient(135deg, #000000, #000000);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: auto;
+      padding: 10px;
+      border-top: 2px solid #ddd;
+      font-size: 1.2rem;
+      color: white;
+  }
+  }
+  
+  @media (max-width: 480px) {
+    header h1 {
+      font-size: 16px;
+      margin-left: 10px;
+    }
+  
+    .big .for_menu i {
+      font-size: 24px;
+    }
+  
+    .big .for_menu .menu_links {
+      gap: 10px;
+      width: 100%;
+    }
+  
+    .big .main_part .for_main .search {
+      flex-direction: column;
+    }
+  
+    .big .main_part .for_main .search input,
+    .big .main_part .for_main .search button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .big .main_part .for_main .for_info {
+      height: auto;
+    }
+  
+    #OrdersTable th, #OrdersTable td {
+      font-size: 12px;
+    }
+  
+    #OrdersTable {
+      min-width: 100%;
+    }
+  }
+  @media (max-width: 1024px) {
+    .big .main_part .for_main .search {
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 20px;
+    }
+  
+    .big .main_part .for_main .search input {
+      width: 68%;
+      margin-left: 20px; /* Slightly smaller for medium devices */
+    }
+  
+    .big .main_part .for_main .search button {
+      width: 28%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .big .main_part .for_main .search {
+      flex-direction: column;
+      gap: 10px; /* Add more space between elements */
+      align-items: stretch; /* Make items fill available width */
+      height: auto;
+      margin-top: 15px; /* Allow for dynamic height */
+    }
+  
+    .big .main_part .for_main .search input {
+      width: 100%; /* Full width input on smaller devices */
+      height: 45px;
+      margin-left: 15px; /* Increase height for easier tapping on touch screens */
+    }
+  
+    .big .main_part .for_main .search button {
+      width: 100%; /* Full width button for consistency */
+      height: 45px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .big .main_part .for_main .search {
+      gap: 8px; /* Smaller gap for small screens */
+      margin-top: 10px;
+    }
+  
+    .big .main_part .for_main .search input {
+      height: 40px;
+      margin-left: 10px;
+    }
+  
+    .big .main_part .for_main .search button {
+      height: 40px;
+    }
+  }

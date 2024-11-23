@@ -1,0 +1,107 @@
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
+const puppeteer = require('puppeteer');
+
+const router = express.Router();
+
+router.post('/generate-pdf', async (req, res) => {
+    try {
+        const { data } = req.body; // Получаем данные из запроса
+        if (!Array.isArray(data) || data.length === 0) {
+            return res.status(400).send('Invalid data: JSON array is required');
+        }
+
+        // Загрузка HTML и CSS шаблонов
+        const filePath = path.join(__dirname, '/pdf/template.html');
+        const html = await fs.promises.readFile(filePath, 'utf8');
+        const cssPath = path.join(__dirname, '/pdf/template.css');
+        const css = await fs.promises.readFile(cssPath, 'utf8');
+
+        let filledHtml = html.replace('</head>', `<style>${css}</style></head>`);
+
+        // Подготовка строк для таблицы
+        let tableRows = '';
+        data.forEach(row => {
+            tableRows += `
+                <tr>
+                    <td>${row.Name || ''}</td>
+                    <td>${row.Currency || ''}</td>
+                    <td>${row.Exchange || ''}</td>
+                    <td>${row.Price || ''}</td>
+                    <td>${row['Cost Price'] || ''}</td>
+                    <td>${row['Selling Price'] || ''}</td>
+                </tr>`;
+        });
+
+        filledHtml = filledHtml.replace('{{tableRows}}', tableRows);
+
+        // Генерация PDF с Puppeteer
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+
+        await page.setContent(filledHtml, { waitUntil: 'networkidle0' });
+
+        try {
+            const pdfBuffer = await page.pdf({
+                format: 'A4',
+                printBackground: true,
+                margin: {
+                    top: '10mm',
+                    right: '10mm',
+                    bottom: '10mm',
+                    left: '10mm'
+                }
+            });
+            await browser.close();
+
+            res.set({
+                'Content-Type': 'application/pdf',
+                'Content-Disposition': `attachment; filename="quotation.pdf"`,
+                'Content-Length': pdfBuffer.length
+            });
+
+            res.write(pdfBuffer);
+            res.end();
+
+        } catch (pdfError) {
+            console.error('Error generating PDF buffer:', pdfError);
+            await browser.close();
+            res.status(500).send('Failed to generate PDF');
+        }
+
+    } catch (error) {
+        console.error('Error generating quotation PDF:', error);
+        res.status(500).send('Server error generating quotation');
+    }
+});
+
+module.exports = router;
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotation PDF</title>
+</head>
+<body>
+    <h1>Quotation</h1>
+    <table border="1" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Currency</th>
+                <th>Exchange</th>
+                <th>Price</th>
+                <th>Cost Price</th>
+                <th>Selling Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{tableRows}}
+        </tbody>
+    </table>
+</body>
+</html>

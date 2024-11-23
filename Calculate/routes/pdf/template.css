@@ -1,0 +1,71 @@
+/* Basic resets for the body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff; /* White background for the PDF */
+}
+
+/* Center the table and apply full width */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Header styles */
+th {
+    background-color: #000;  /* Black background for the header */
+    color: #fff;             /* White text color for header */
+    padding: 10px;
+    text-align: left;
+}
+
+/* Style for table rows */
+td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Table row hover effect (does not apply in PDF, but it’s here for completeness) */
+tr:hover {
+    background-color: #f4f4f4;  /* Light grey background on hover */
+}
+
+/* No background color for the rows */
+tbody tr {
+    background-color: transparent;
+}
+
+/* Logo style in the header */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Style for the logo inside the header */
+#logo {
+    max-width: 150px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Optional: Adjusting page margins for better PDF layout */
+@page {
+    margin: 30mm 20mm; /* Top, right, bottom, left */
+}
+
+@media print {
+    /* Ensures that the logo and table fit nicely in the print layout */
+    #logo {
+        max-width: 120px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+    th, td {
+        padding: 8px;
+    }
+}

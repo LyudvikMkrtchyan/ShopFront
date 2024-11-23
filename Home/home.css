@@ -1,0 +1,167 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+    color: #333;
+  }
+  
+  /* Logo Section */
+  .for_logo1 {
+    width: 100%;
+    height: 28vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .for_logo1 .logo1 {
+    width: 15%;
+    height: 80%;
+    background-image: url(1.jpeg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .for_logo1 .logo1:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Selection Section */
+  .select_part {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Enables wrapping for smaller screens */
+  }
+  
+  .select_part a {
+    width: 14%;
+    height: 20vh;
+    background-color: #000000;
+    color: white;
+    font-size: 28px;
+    text-decoration: none;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .select_part a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Small Button */
+  .a5 {
+    position: absolute;
+    right: 0;
+    bottom: 700px;
+    width: 14%;
+    height: 5vh;
+    background-color: #000000;
+    color: white;
+    font-size: 15px;
+    text-decoration: none;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Responsive Styles */
+  
+  /* Medium Screens (1024px and below) */
+  @media (max-width: 1024px) {
+    .for_logo1 .logo1 {
+      width: 20%;
+    }
+  
+    .select_part a {
+      width: 18%;
+      font-size: 24px;
+    }
+    .a5 {
+        width: 60%;
+        height: 6vh;
+        font-size: 14px;
+        right: auto; /* Center the button on small screens */
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 300px;
+      }
+      
+  }
+  
+  /* Small Screens (768px and below) */
+  @media (max-width: 768px) {
+    .for_logo1 .logo1 {
+      width: 25%;
+    }
+  
+    .select_part {
+      flex-wrap: wrap;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  
+    .select_part a {
+      width: 40%;
+      font-size: 22px;
+      height: 18vh;
+    }
+    .a5 {
+        width: 60%;
+        height: 6vh;
+        font-size: 14px;
+        right: auto; /* Center the button on small screens */
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 300px;
+      }
+  }
+  
+  /* Extra Small Screens (480px and below) */
+  @media (max-width: 480px) {
+    .for_logo1 .logo1 {
+      width: 35%;
+    }
+  
+    .select_part {
+      margin-bottom: 30px;
+    }
+  
+    .select_part a {
+      width: 80%;
+      font-size: 18px;
+      height: 15vh;
+    }
+  
+    .a5 {
+      width: 60%;
+      height: 6vh;
+      font-size: 14px;
+      right: auto; /* Center the button on small screens */
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 300px;
+    }
+  }
+  

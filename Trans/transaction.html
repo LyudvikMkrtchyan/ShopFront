@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRANSFERS</title>
+    <link rel="stylesheet" href="transaction.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script defer src='https://cdn.socket.io/4.0.0/socket.io.min.js'></script>
+</head>
+
+<body>
+
+    <header>
+        <h1>TRANSFERS</h1>
+    </header>
+
+
+    <div class="big">
+        <div class="for_menu">
+            <i class="fa-solid fa-bars" id="menu_bar_icon"></i>
+            <div class="for_menu_links">
+                <div class="inactive_menu_bar">
+                    <h2>MENU</h2>
+                </div>
+                <div class='menu_links'>
+                    <a class="menu_links_item" href="../Bank/bank.html">BANK</a>
+                    <a class="menu_links_item" href="../Cash/cach.html">CASHE</a>
+                    <a class="menu_links_item" href="../Adit/aditional.html">ADITIONAL</a>
+                    <a class="menu_links_item" href="../Trans/transaction.html">TRANSFERS</a>
+                    <a class="menu_links_item" href="../Total/total.html">TOTAL</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main_part">
+            <div class="for_main">
+                <div class="search">
+                    <input type="text" id="searchInput" placeholder="SEARCH">
+                    <button id="search_btn">DATE</button>
+                    <div id="dateDropdown" class="dropdown" style="display: none;">
+                        <!-- Start Month and Year -->
+                        <select id="startMonthSelect">
+                            <option value="" disabled selected>Start Month</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        
+                        <select id="startYearSelect">
+                            <option value="" disabled selected>Start Year</option>
+                            <!-- Dynamic year options will be populated here -->
+                        </select>
+                    
+                        <!-- End Month and Year -->
+                        <select id="endMonthSelect">
+                            <option value="" disabled selected>End Month</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        
+                        <select id="endYearSelect">
+                            <option value="" disabled selected>End Year</option>
+                            <!-- Dynamic year options will be populated here -->
+                        </select>
+                        
+                        <!-- Confirm button -->
+                        <button id="confirmDateBtn">Confirm</button>
+                    </div>
+                    
+
+                    <button id="addTaskBtn">NEW</button>
+                </div>
+                
+
+                
+
+
+                <div class="for_info">
+                    <div class="info">
+                        <!-- Existing Orders Table -->
+                        <table id="OrdersTable" class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Reason</th>
+                                    <th>Expense</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Existing rows here -->
+                            </tbody>
+                        </table>
+                        <!-- New Order Modal Table -->
+                        <div class="info">
+                            <table id="NewOrderTable" class="styled-table">
+                                <tbody>
+                                    <tr class="modal">
+                                        <td><input type="text" name="id" placeholder="Career ID"></td>
+                                        <td><input type="date" name="date" placeholder="Date"></td>
+                                        <td><input type="text" name="reason" placeholder="Date1"></td>
+                                        <td><input type="text" name="expense" placeholder="Customer ID"></td> 
+                                        <td><button id="add_table_button">Add</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+    <div class="total-price-container">
+        <strong>Total</strong>
+        <span class="total-price">$0.00</span>
+    </div>
+
+    <script defer src='transaction.js'></script>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate</title>
+    <link rel="stylesheet" href="calculate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script defer src='https://cdn.socket.io/4.0.0/socket.io.min.js'></script>
+</head>
+
+<body>
+
+    <header>
+        <img src="1.jpeg" alt="Logo" class="logo">
+    </header>
+
+    <div class="big">
+
+        <div class="main_part">
+            <div class="for_main">
+                <div class="search">
+                    <button id="addTaskBtn">NEW</button>
+                </div>
+
+                <div class="for_info">
+                    <div class="info">
+                        <!-- Existing Orders Table -->
+                        <table id="OrdersTable" class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Currency</th>
+                                    <th>Exchange</th>
+                                    <th>Price</th>
+                                    <th>Cost Price</th>
+                                    <th>Selling Price</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Existing rows here -->
+                            </tbody>
+                        </table>
+                        
+                        <!-- New Order Modal Table -->
+                        <div class="info">
+                            <table id="NewOrderTable" class="styled-table">
+                                <tbody>
+                                    <tr class="modal">
+                                        <td><input type="text" name="name" placeholder="NAME"></td>
+                                        <td>
+                                            <select name="currency">
+                                                <option value="" disabled selected>Select</option>
+                                                <option value="$">Dollar $</option>
+                                                <option value="€">Euro €</option>
+                                                <option value="¥">Yuan ¥</option>
+                                            </select>
+                                        </td>  
+                                        <td><input type="text" name="exchange" placeholder="Exchange"></td> 
+                                        <td><input type="text" name="price" placeholder="Price"></td> 
+                                        <td><input type="text" name="costprice" placeholder="Cost Price"></td>
+                                        <td><input type="text" name="sellingprice" placeholder="Selling Price"></td>
+                                        <td><button id="add_table_button">Add</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button id="gen_pdf">Generating</button>
+                      
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script defer src='calculate.js'></script>
+</body>
+
+</html>
