@@ -45,27 +45,32 @@
                         </table>
                         
                         <!-- New Order Modal Table -->
-                        <div class="info">
-                            <table id="NewOrderTable" class="styled-table">
-                                <tbody>
-                                    <tr class="modal">
-                                        <td><input type="text" name="name" placeholder="NAME"></td>
-                                        <td>
-                                            <select name="currency">
-                                                <option value="" disabled selected>Select</option>
-                                                <option value="$">Dollar $</option>
-                                                <option value="€">Euro €</option>
-                                                <option value="¥">Yuan ¥</option>
-                                            </select>
-                                        </td>  
-                                        <td><input type="text" name="exchange" placeholder="Exchange"></td> 
-                                        <td><input type="text" name="price" placeholder="Price"></td> 
-                                        <td><input type="text" name="costprice" placeholder="Cost Price"></td>
-                                        <td><input type="text" name="sellingprice" placeholder="Selling Price"></td>
-                                        <td><button id="add_table_button">Add</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div id="addDataModal" class="modal-container" style="display: none;">
+                            <div class="modal-content">
+                                <h2>Add New Data</h2>
+                        
+                                <label for="modalName">Name:</label>
+                                <input type="text" id="modalName" placeholder="Enter Name">
+                        
+                                <div class="currency-exchange-container">
+                                    <select id="modalCurrency">
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="$">Dollar $</option>
+                                        <option value="€">Euro €</option>
+                                        <option value="¥">Yuan ¥</option>
+                                    </select>
+                                    
+                                </div>
+                        
+                                <label for="modalExchange">Exchange:</label>
+                                <input type="text" id="modalExchange" placeholder="Enter Exchange">
+                        
+                                <label for="modalPrice">Price:</label>
+                                <input type="text" id="modalPrice" placeholder="Enter Price">
+                        
+                                <button id="saveDataBtn">Save</button>
+                                <button id="closeModalBtn">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -200,55 +200,95 @@ th:nth-child(5), td:nth-child(5) {
 
 
 /* Modal Table Styles */
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 400px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-content button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#saveDataBtn {
+  background-color: #28a745;
+  color: white;
+}
+
+#closeModalBtn {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Modal background */
 .modal {
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
 }
 
-.modal.active {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-    z-index: 10;
+/* Modal content */
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 5px;
+  width: 60%; /* Adjust width as needed */
+  max-width: 600px;
 }
 
-/* Input fields and Dropdowns in Modal */
-.modal.active td input, .modal.active td select {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+/* Modal footer */
+.modal-footer {
+  text-align: right;
 }
 
-.modal.active td input:focus, .modal.active td select:focus {
-    border-color: #000000;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    transform: scale(1.05);
-    transition: transform 0.3s ease, border-color 0.3s ease;
+.modalActions button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-/* Buttons in Modal */
-.modal.active td button {
-    width: 100%;
-    max-width: 120px;
-    background-color: #000000;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+modalActions .button:hover {
+  background-color: #45a049;
 }
 
-.modal.active td button:hover {
-    background-color: #ffffff;
-    color: black;
-    border: 1px solid #000000;
-    transform: scale(1.05);
-}
 
 .total-price-container {
   width: 100%;
@@ -279,190 +319,135 @@ th:nth-child(5), td:nth-child(5) {
 }
 
 
+/* Background overlay */
 #dateDropdown {
-  display: none; /* Initially hidden */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  display: none; /* Hidden by default */
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Dropdown content styling */
+.dropdown-content {
   background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 400px;
+  width: 90%; /* Responsive width */
+}
+
+/* Select elements spacing */
+.dropdown-content select {
+  margin: 10px 0;
+  padding: 5px;
+  width: 100%; /* Make select dropdowns full-width */
   border: 1px solid #ccc;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  z-index: 100; /* Ensure it appears above other elements */
-  min-width: 150px; /* Optional: Set a minimum width */
+  border-radius: 4px;
+}
+
+/* Confirm button */
+#confirmDateBtn {
+  margin: 10px 0;
+  padding: 5px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  margin-top: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#confirmDateBtn:hover {
+  background-color: #2a2a2a;
+}
+
+tr.editing {
+  background-color: #f9f9a6; /* Light yellow to indicate edit mode */
 }
 
 
 
 
 
+
+
+
   
-  @media (max-width: 1024px) {
-    .big {
-      flex-direction: column;
-      height: auto;
-    }
-  
-    .big .for_menu {
-      width: 100%;
-      height: auto;
-    }
-  
-    .big .main_part {
-      width: 100%;
-      height: auto;
-    }
-  
-    .big .main_part .for_main .search input,
-    .big .main_part .for_main .search button {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-  
-    #OrdersTable th, #OrdersTable td {
-      padding: 10px;
-    }
+@media (max-width: 1024px) {
+  .big {
+    flex-direction: column;
+  }
+
+  .big .main_part {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  header h1 {
+    font-size: 1.2rem;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+
+  .total-price-container {
+    flex-direction: column; /* Adjust alignment for smaller screens */
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 0.5rem;
+  }
+
+  header h1 {
+    font-size: 1rem;
+  }
+
+  .big .for_menu i {
+    font-size: 24px;
+  }
+
+  .modal td button {
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  table {
+    font-size: 0.8rem;
+    word-wrap: break-word; /* Prevent text overflow */
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 0.9rem;
+  }
+
+  .big .main_part .for_main {
+    padding: 1rem;
+  }
+
+  table th, table td {
+    font-size: 0.7rem;
+    padding: 5px;
   }
   
-  @media (max-width: 768px) {
-    header {
-      height: 12vh;
-    }
-  
-    header h1 {
-      font-size: 18px;
-      margin-left: 20px;
-    }
-  
-    .big .for_menu i {
-      font-size: 28px;
-    }
-  
-    .big .for_menu .menu_links {
-      width: 100%;
-    }
-  
-    .big .main_part .for_main .search {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  
-    .big .main_part .for_main .search input,
-    .big .main_part .for_main .search button {
-      width: 100%;
-    }
-  
-    .big .main_part .for_main .for_info {
-      height: auto;
-    }
-  
-    #OrdersTable th, #OrdersTable td {
-      font-size: 14px;
-    }
-  
-    #OrdersTable {
-      min-width: auto;
-    }
-    .total-price-container {
-      width: 125%;
-      border-collapse: collapse;
-      background: linear-gradient(135deg, #000000, #000000);
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      margin-bottom: auto;
-      padding: 10px;
-      border-top: 2px solid #ddd;
-      font-size: 1.2rem;
-      color: white;
+  .big .main_part .for_main .search input {
+    width: 100%;
   }
+
+  .big .main_part .for_main .search button {
+    width: 100%;
   }
-  
-  @media (max-width: 480px) {
-    header h1 {
-      font-size: 16px;
-      margin-left: 10px;
-    }
-  
-    .big .for_menu i {
-      font-size: 24px;
-    }
-  
-    .big .for_menu .menu_links {
-      gap: 10px;
-      width: 100%;
-    }
-  
-    .big .main_part .for_main .search {
-      flex-direction: column;
-    }
-  
-    .big .main_part .for_main .search input,
-    .big .main_part .for_main .search button {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-  
-    .big .main_part .for_main .for_info {
-      height: auto;
-    }
-  
-    #OrdersTable th, #OrdersTable td {
-      font-size: 12px;
-    }
-  
-    #OrdersTable {
-      min-width: 100%;
-    }
-  }
-  @media (max-width: 1024px) {
-    .big .main_part .for_main .search {
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 20px;
-    }
-  
-    .big .main_part .for_main .search input {
-      width: 68%;
-      margin-left: 20px; /* Slightly smaller for medium devices */
-    }
-  
-    .big .main_part .for_main .search button {
-      width: 28%;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .big .main_part .for_main .search {
-      flex-direction: column;
-      gap: 10px; /* Add more space between elements */
-      align-items: stretch; /* Make items fill available width */
-      height: auto;
-      margin-top: 15px; /* Allow for dynamic height */
-    }
-  
-    .big .main_part .for_main .search input {
-      width: 100%; /* Full width input on smaller devices */
-      height: 45px;
-      margin-left: 15px; /* Increase height for easier tapping on touch screens */
-    }
-  
-    .big .main_part .for_main .search button {
-      width: 100%; /* Full width button for consistency */
-      height: 45px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .big .main_part .for_main .search {
-      gap: 8px; /* Smaller gap for small screens */
-      margin-top: 10px;
-    }
-  
-    .big .main_part .for_main .search input {
-      height: 40px;
-      margin-left: 10px;
-    }
-  
-    .big .main_part .for_main .search button {
-      height: 40px;
-    }
-  }
+}

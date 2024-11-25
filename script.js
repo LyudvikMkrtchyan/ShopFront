@@ -2,7 +2,7 @@
     document.getElementById('login-form').addEventListener('submit', async (event) => {;
     event.preventDefault();
     
-    localStorage.setItem('host', '192.168.1.28');
+    localStorage.setItem('host', '194.32.77.64');
     localStorage.setItem('port', '9091');
         
       
@@ -23,6 +23,7 @@
             const port = localStorage.getItem('port');
             const command = 'login';
             const URL = `http://${host}:${port}/${command}`
+
 
         try {
             const response = await fetch(URL, {

@@ -1,47 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.querySelector('#OrdersTable tbody');
     const modal = document.querySelector('.modal');
-    const saveOrderBtn = document.getElementById('add_table_button');
-
-    document.getElementById('addTaskBtn').addEventListener('click', () => {
-        modal.classList.add('active');
+    const addDataModal = document.getElementById('addDataModal');
+    const addTaskBtn = document.getElementById('addTaskBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    addTaskBtn.addEventListener('click', () => {
+        addDataModal.style.display = 'flex';
+    });
+    closeModalBtn.addEventListener('click', () => {
+        addDataModal.style.display = 'none';
     });
 
-    saveOrderBtn.addEventListener('click', () => {
-        const classModalFields = modal ? modal.querySelectorAll('input, select') : [];
+    document.getElementById('saveDataBtn').addEventListener('click', () => {
+        const name = document.getElementById('modalName').value;
+        const currency = document.getElementById('modalCurrency').value;
+        const exchange = document.getElementById('modalExchange').value;
+        const price = document.getElementById('modalPrice').value;
 
-        let name, currency, exchange, price, costprice, sellingprice;
-
-        classModalFields.forEach(field => {
-            if (field.tagName === 'INPUT') {
-                switch (field.name) {
-                    case "name":
-                        name = field.value;
-                        break;
-                    case "exchange":
-                        exchange = field.value;
-                        break;
-                    case "price":
-                        price = field.value;
-                        break;
-                    case "costprice":
-                        costprice = field.value;
-                        break;
-                    case "sellingprice":
-                        sellingprice = field.value;
-                        break;
-                }
-            } else if (field.tagName === 'SELECT') {
-                if (field.name === "currency") {
-                    currency = field.options[field.selectedIndex].value;
-                }
-            }
-        });
-
-        const newOrder = { id: Date.now(), name, currency, exchange, price, costprice, sellingprice };
+        const newOrder = { id: Date.now(), name, currency, exchange, price};
         addRow(newOrder);
-        modal.classList.remove('active');
-        clearModalFields();
+        addDataModal.style.display = 'none';
     });
 
     function addRow(order) {
@@ -55,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${order.exchange}</td>
             <td>${order.price}</td>
             <td>${costPrice}</td>
-            <td>${sellingPrice}</td>
+            <td>${Number(sellingPrice.toFixed(2))}</td>
             <td>
                 <a href="#" class="delete-btn"><i class="fa-solid fa-trash" style="margin-left: 2vh; color: rgb(0, 0, 0);"></i></a>
             </td>
@@ -63,20 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.appendChild(tr);
     }
 
-    function deleteRow(row, order) {
-        row.remove();
-    }
-
-    function clearModalFields() {
-        const modalFields = modal ? modal.querySelectorAll('input, select') : [];
-        modalFields.forEach(field => {
-            if (field.tagName === 'INPUT') {
-                field.value = '';
-            } else if (field.tagName === 'SELECT') {
-                field.selectedIndex = 0;
-            }
-        });
-    }
 
     tableBody.addEventListener('click', (e) => {
         if (e.target.closest('.delete-btn')) {
@@ -100,9 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 sellingprice: cells[5].innerText
             };
         });
-
+        
+        const host = localStorage.getItem('host');
+        const port = localStorage.getItem('port');
+        console.log(host + ':' + port + ':' + host + ':' + port)
+        const command = 'calculation/generate-pdf';
+        const url = `http://${host}:${port}/${command}`;
         try {
-            const response = await fetch('http://localhost:3003/calculation/generate-pdf', {
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',  // Correct content type for JSON

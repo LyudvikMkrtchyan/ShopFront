@@ -26,10 +26,11 @@
                 </div>
                 <div class='menu_links'>
                     <a class="menu_links_item" href="../Bank/bank.html">BANK</a>
-                    <a class="menu_links_item" href="../Cash/cach.html">CASHE</a>
+                    <a class="menu_links_item" href="../Cash/cach.html">CASH</a>
                     <a class="menu_links_item" href="../Adit/aditional.html">ADITIONAL</a>
                     <a class="menu_links_item" href="../Trans/transaction.html">TRANSFERS</a>
                     <a class="menu_links_item" href="../Total/total.html">TOTAL</a>
+                    <a class="menu_links_item" href="../Calculate/calculate.html">CALCULATION</a>
                 </div>
             </div>
         </div>
@@ -39,51 +40,57 @@
                 <div class="search">
                     <button id="search_btn">DATE</button>
                     <div id="dateDropdown" class="dropdown" style="display: none;">
-                        <!-- Start Month and Year -->
-                        <select id="startMonthSelect">
-                            <option value="" disabled selected>Start Month</option>
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4">April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                        
-                        <select id="startYearSelect">
-                            <option value="" disabled selected>Start Year</option>
-                            <!-- Dynamic year options will be populated here -->
-                        </select>
-                    
-                        <!-- End Month and Year -->
-                        <select id="endMonthSelect">
-                            <option value="" disabled selected>End Month</option>
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4">April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                        
-                        <select id="endYearSelect">
-                            <option value="" disabled selected>End Year</option>
-                            <!-- Dynamic year options will be populated here -->
-                        </select>
-                        
-                        <!-- Confirm button -->
+                        <div class="dropdown-content">
+                          <h3>Select Date Range</h3>
+                      
+                          <!-- Start Month and Year -->
+                          <div>
+                            <select id="startMonthSelect">
+                              <option value="" disabled selected>Start Month</option>
+                              <option value="1">January</option>
+                              <option value="2">February</option>
+                              <option value="3">March</option>
+                              <option value="4">April</option>
+                              <option value="5">May</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
+                            </select>
+                            <select id="startYearSelect">
+                              <option value="" disabled selected>Start Year</option>
+                              <!-- Dynamic year options will be populated here -->
+                            </select>
+                          </div>
+                      
+                          <!-- End Month and Year -->
+                          <div>
+                            <select id="endMonthSelect">
+                              <option value="" disabled selected>End Month</option>
+                              <option value="1">January</option>
+                              <option value="2">February</option>
+                              <option value="3">March</option>
+                              <option value="4">April</option>
+                              <option value="5">May</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
+                            </select>
+                            <select id="endYearSelect">
+                              <option value="" disabled selected>End Year</option>
+                              <!-- Dynamic year options will be populated here -->
+                            </select>
+                          </div>
+                      
+                          
+                        </div>
                     </div>
                     
 
@@ -124,6 +131,7 @@
             </table>
         </div>
     </div>
+
     
     
 

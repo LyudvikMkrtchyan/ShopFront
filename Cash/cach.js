@@ -1,16 +1,28 @@
-const classModal = document.querySelector('.modal');
+const addDataModal = document.getElementById('addDataModal');
+const addTaskBtn = document.getElementById('addTaskBtn');
+const closeModalBtn = document.getElementById('closeModalBtn');
+
+// Open modal on button click
+addTaskBtn.addEventListener('click', () => {
+    addDataModal.style.display = 'flex';
+});
+
+// Close modal on button click
+closeModalBtn.addEventListener('click', () => {
+    addDataModal.style.display = 'none';
+});
+
+document.getElementById('menu_bar_icon').addEventListener('click', () => {
+    document.querySelector('.for_menu_links').classList.toggle('active');
+});
+
 
 //Opening a Dropdown
 document.getElementById('search_btn').addEventListener('click', (event) => {
     const dateDropdown = document.getElementById('dateDropdown');
 
-    if (dateDropdown.style.display === 'none' || dateDropdown.style.display === '') {
-        const rect = document.getElementById('search_btn').getBoundingClientRect(); // Get button position
-        dateDropdown.style.display = 'block';
-        dateDropdown.style.position = 'absolute';
-        dateDropdown.style.left = `${rect.left}px`; // Align dropdown horizontally with the button
-        dateDropdown.style.top = `${rect.bottom}px`;
-        
+    if (  dateDropdown.style.display = "flex") {
+        console.log('Entering');
         // Populate year options dynamically
         const yearSelects = [document.getElementById('startYearSelect'), document.getElementById('endYearSelect')];
         const currentYear = new Date().getFullYear();
@@ -29,17 +41,14 @@ document.getElementById('search_btn').addEventListener('click', (event) => {
         dateDropdown.style.display = 'none';
     }
     event.stopPropagation();
+    window.addEventListener("click", (event) => {
+        const dateDropdown = document.getElementById('dateDropdown');
+        if (event.target === dateDropdown) {
+            dateDropdown.style.display = 'none'; // Hide the dropdown
+        }
+    });
 });
 
-//Closing a Dropdown
-document.addEventListener('click', (event) => {
-    const dateDropdown = document.getElementById('dateDropdown');
-    const dateButton = document.getElementById('search_btn');
-
-    if (!dateDropdown.contains(event.target) && event.target !== dateButton) {
-        dateDropdown.style.display = 'none'; // Hide the dropdown
-    }
-});
 
 //Condirming Values for Fetch 
 document.getElementById('confirmDateBtn').addEventListener('click', () => {
@@ -47,6 +56,8 @@ document.getElementById('confirmDateBtn').addEventListener('click', () => {
     const startYear = document.getElementById('startYearSelect').value;
     const endMonth = document.getElementById('endMonthSelect').value;
     const endYear = document.getElementById('endYearSelect').value;
+
+    console.log('Fetch', startMonth, startYear, endMonth, endYear);
     
     if (!startMonth || !startYear) {
         alert('Please select both start month and year.');
@@ -86,6 +97,7 @@ document.getElementById('confirmDateBtn').addEventListener('click', () => {
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
+            dateDropdown.style.display = "none";
             return response.json();
         })
         .then(data => {
@@ -99,14 +111,6 @@ document.getElementById('confirmDateBtn').addEventListener('click', () => {
                 row.insertCell(1).textContent = item.date;
                 row.insertCell(2).textContent = item.reason;
                 row.insertCell(3).textContent = parseInt(item.expense, 10);
-                row.insertCell(4).innerHTML = `
-                    <a href="#"><i class="fa-solid fa-pencil" style="margin-left: 2vh; color: rgb(0, 0, 0);"></i></a>
-                    <a href="#"><i class="fa-solid fa-trash" style="margin-left: 2vh; color: rgb(0, 0, 0);"></i></a>
-                `;
-                
-                // Attach event listeners for edit and remove
-                row.querySelector('.fa-pencil').addEventListener('click', handleEdit);
-                row.querySelector('.fa-trash').addEventListener('click', handleRemove);
             });
 
             // Update total price (if applicable)
@@ -120,36 +124,14 @@ document.getElementById('confirmDateBtn').addEventListener('click', () => {
 
 
 //Add the new one
-document.getElementById('add_table_button').addEventListener('click', async () => {
-    const classModalFields = classModal ? classModal.querySelectorAll('input') : [];
-    let expense;
-    let reason;
-    let date;
-
-    classModalFields.forEach(field => {
-        if (field.tagName === 'INPUT') {
-            if (field.name === "reason") {
-                reason = field.value;
-            }
-            if (field.name === "expense") {
-                
-                expense = parseInt(field.value, 10);
-                console.log(typeof expense)
-                
-            }
-
-
-            if (field.name === "date") {
-                date = field.value;
-            }
-        }
-    });
-
-    // Ensure that all fields are filled
+document.getElementById('saveDataBtn').addEventListener('click', async () => {
+    const date = document.getElementById('modalDate').value;
+    const reason = document.getElementById('modalReason').value.trim();
+    const expense = document.getElementById('modalExpense').value.trim();
     
 
     const Data = {
-        expense: expense,
+        expense: parseInt(expense, 10),
         date: date,
         reason: reason
     };
@@ -158,6 +140,7 @@ document.getElementById('add_table_button').addEventListener('click', async () =
 
     const host = localStorage.getItem('host');
     const port = localStorage.getItem('port');
+    console.log(host, port);
     const command = "addCashTransaction";
     const URL = `http://${host}:${port}/${command}`;
 
@@ -172,6 +155,7 @@ document.getElementById('add_table_button').addEventListener('click', async () =
 
         if (response.ok) {
             alert('Data added successfully');
+            addDataModal.style.display = 'none';
         } else {
             alert('Data not added successfully');
         }
@@ -184,21 +168,25 @@ document.getElementById('add_table_button').addEventListener('click', async () =
 //search 
 async function performSearch() {
     const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
-    
+
+    // Get all table rows
+    const tableRows = document.querySelectorAll('#OrdersTable tbody tr');
+
     if (!searchTerm) {
+        // If search term is empty, show all rows
+        tableRows.forEach(row => {
+            row.style.display = ''; // Reset to default display
+        });
         return;
     }
 
     console.log('Search term =', searchTerm);
 
-    // Get all table rows
-    const tableRows = document.querySelectorAll('#OrdersTable tbody tr');
-    
     tableRows.forEach(row => {
         const cells = row.getElementsByTagName('td'); // Get all cells in the row
-        
+
         let rowContainsSearchTerm = false;
-        
+
         // Loop through each cell in the row and check if it contains the search term
         for (let cell of cells) {
             if (cell.innerText.toLowerCase().includes(searchTerm)) {
@@ -208,13 +196,10 @@ async function performSearch() {
         }
 
         // Show or hide the row based on whether it contains the search term
-        if (rowContainsSearchTerm) {
-            row.style.display = ''; // Show the row
-        } else {
-            row.style.display = 'none'; // Hide the row
-        }
+        row.style.display = rowContainsSearchTerm ? '' : 'none';
     });
 }
+
 
 // real-time search logic
 let debounceTimeout;
@@ -223,79 +208,89 @@ document.getElementById('searchInput').addEventListener('input', function() {
     debounceTimeout = setTimeout(performSearch, 300); // Delay search by 300ms
 });
 
-// Opening a modal table to input
-document.getElementById('addTaskBtn').addEventListener('click', () => {
-    console.log('addTaskBtn')
-    if (classModal) {
-        classModal.classList.add('active');
+
+
+
+let currentRow; // To store the row that's being edited
+
+// Event delegation: Attach event listener to tbody, then filter for rows
+document.querySelector('#OrdersTable tbody').addEventListener('click', function(event) {
+    const row = event.target.closest('tr'); // Find the closest <tr> ancestor of the clicked target
+    if (row) {
+        handleRowClick(row); // Pass the clicked row to the handler directly
     }
 });
 
+// Function to handle row click and open the modal
+function handleRowClick(row) {
+    currentRow = row; // Directly assign the clicked row to currentRow
+    const cells = currentRow.querySelectorAll('td'); // Get all the cells of the clicked row
 
-//opening Menu 
-document.getElementById('menu_bar_icon').addEventListener('click', () => {
-    document.querySelector('.for_menu_links').classList.toggle('active');
-});
+    // Extract data from the row cells
+    const rowData = Array.from(cells).map(cell => cell.innerText);
 
+    console.log('Row Data:', rowData); // Log data to debug what's being extracted
 
-function handleEdit(event) {
-    const row = event.target.closest('tr');
-    if (!row) return;
-    
-    const cells = row.querySelectorAll('td:not(:last-child)'); // Select all td cells except the last one
-    
-    const fieldNames = ['id', 'date', 'reason', 'expense']; // Update this array based on your data structure
-
-    // Convert each cell into an input field or dropdown
-    cells.forEach((cell, index) => {
-        let input;
-
-        // Create an input field for each cell
-        // if (fieldNames[index] === 'id') {
-        //     // For 'id' field, just display it as text (not input)
-        //     const textNode = document.createTextNode(cell.innerText); // Keep the text as it is
-        //     cell.innerHTML = ''; // Clear the cell's content
-        //     cell.appendChild(textNode); // Add the text node to the cell
-        // } else {
-            // For other fields, create an editable input
-            input = document.createElement('input');
-            input.type = 'text'; // Set input type to text
-            input.value = cell.innerText; // Set the input's value to the cell's text content
-            input.setAttribute('data-field', fieldNames[index]);
-
-            cell.innerHTML = ''; // Clear the cell's content
-            cell.appendChild(input); // Add the input field to the cell
-        
-    });
-
-    const editBtn = event.target.closest('i'); // Get the closest icon element
-    if (editBtn) {
-        editBtn.classList.replace('fa-pencil', 'fa-save'); // Change the button icon
-        editBtn.removeEventListener('click', handleEdit); // Remove the edit event listener
-        editBtn.addEventListener('click', handleSave); // Add the save event listener
+    if (rowData.length < 4) {
+        console.error('Data is missing in row cells');
+        return;
     }
+
+    // Set the modal content using extracted row data
+    const modalContent = `
+        <p><strong>ID:</strong> <span id="Id">${rowData[0]}</span></p>
+        <p><strong>Date:</strong> <input type="text" id="Date" value="${rowData[1]}" /></p>
+        <p><strong>Reason:</strong> <input type="text" id="Reason" value="${rowData[2]}" /></p>
+        <p><strong>Expense:</strong> <input type="text" id="Expense" value="${rowData[3]}" /></p>
+    `;
+
+    // Set the content inside the modal
+    document.getElementById('modalData').innerHTML = modalContent;
+
+    // Show the modal
+    const modal = document.getElementById('rowModal');
+    modal.style.display = 'block';
+
+    // Attach event listeners for Save and Delete buttons
+    document.getElementById('saveModalBtn').addEventListener('click', handleSave);
+    document.getElementById('deleteModalBtn').addEventListener('click', handleDelete);
+
 }
 
-async function handleSave(event) {
-    const row = event.target.closest('tr');
-    const cells = row.querySelectorAll('td:not(:last-child)');
 
-    const Data = {};
 
-    cells.forEach(cell => {
-        const input = cell.querySelector('input'); // Find the input field inside the cell
-        if (input) {
-            const fieldName = input.getAttribute('data-field');
-            Data[fieldName] = input.value; // Assign the value to the corresponding field in the Data object
-        }
-    });
 
-    // Convert specific fields to appropriate types
-    Data.expense = parseInt(Data.expense, 10); // Ensure expense is an integer
-    Data.id = parseInt(Data.id, 10); // Convert id to number if it's a valid number
 
-    console.log(Data); // Log the data to check the values before sending
 
+// Function to save the edited data
+// Function to save the edited data
+async function handleSave() {
+    // Get the values from the modal
+    const id = document.getElementById('Id').innerText; // ID is a span, so innerText
+    const date = document.getElementById('Date').value; // Should be a string
+    const reason = document.getElementById('Reason').value; // Should be a string
+    const expense = document.getElementById('Expense').value; // Should be a number
+
+    // Log the values to ensure they are being captured correctly
+    console.log('Modal values:', { id, date, reason, expense });
+
+    // Check if the fields have valid values before proceeding
+    if (!date || !reason || isNaN(expense)) {
+        alert('Please ensure all fields are filled out correctly.');
+        return;
+    }
+
+    // Prepare the data to be updated
+    const updatedData = {
+        id: parseInt(id, 10), // Ensure ID is an integer
+        date: date,
+        reason: reason,
+        expense: parseFloat(expense) // Ensure expense is a number (decimal)
+    };
+
+    console.log('Updated data:', updatedData); // Check what data you're sending
+
+    // Make the API request to save the updated data
     const host = localStorage.getItem('host');
     const port = localStorage.getItem('port');
     const command = "updateCashTransaction";
@@ -307,10 +302,17 @@ async function handleSave(event) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(Data)
+            body: JSON.stringify(updatedData)
         });
 
         if (response.ok) {
+            // Update the row in the table with the new data
+            const cells = currentRow.querySelectorAll('td');
+            cells[0].innerText = updatedData.id; // Update ID cell
+            cells[1].innerText = updatedData.date; // Update Date cell
+            cells[2].innerText = updatedData.reason; // Update Reason cell
+            cells[3].innerText = updatedData.expense; // Update Expense cell
+
             alert('Data updated successfully');
         } else {
             alert('Failed to update data');
@@ -319,30 +321,26 @@ async function handleSave(event) {
         console.error('Error:', error);
         alert('An error occurred while updating data');
     }
+
+    // Optionally, close the modal
+    closeModal(); // Close the modal after saving
 }
 
 
-async function handleRemove(event) {
-    const row = event.target.closest('tr');
-    const idCell = row.querySelector('td:first-child'); // Assuming the ID is in the first cell of the row
-    const id = parseInt(idCell.innerText, 10); // Extract the ID from the cell's innerText and parse it to an integer
 
-    if (isNaN(id)) {
-        console.error('ID is undefined or invalid. Cannot proceed with deletion.');
-        return;
-    }
+
+// Function to delete the row
+async function handleDelete() {
+    const id = document.getElementById('Id').innerText;
 
     const host = localStorage.getItem('host');
     const port = localStorage.getItem('port');
     const command = "deleteCashTransaction";
     const URL = `http://${host}:${port}/${command}`;
     
-    const Data = {
-        id: id
-    };
+    const Data = { id: parseInt(id, 10) };
 
     try {
-        console.log('ID before deletion:', id); // For debugging purposes
         const response = await fetch(URL, {
             method: "POST",
             headers: {
@@ -351,17 +349,33 @@ async function handleRemove(event) {
             body: JSON.stringify(Data)
         });
 
-        if (!response.ok) {
-            throw new Error('Failed to delete order');
+        if (response.ok) {
+            // Remove the row from the table
+            currentRow.remove();
+            alert('Row deleted successfully');
+        } else {
+            alert('Failed to delete row');
         }
-
-        console.log('Track deleted successfully');
-        row.remove(); // Remove the row from the table
     } catch (error) {
-        console.error('Error deleting order:', error);
-        alert('Failed to delete track. Please try again.');
+        console.error('Error deleting row:', error);
+        alert('An error occurred while deleting row');
     }
+
+    closeModal(); // Close the modal after deletion
 }
+
+// Function to close the modal
+function closeModal() {
+    const modal = document.getElementById('rowModal');
+    modal.style.display = 'none';
+
+    // Remove event listeners when modal is closed to avoid multiple bindings
+    document.getElementById('saveModalBtn').removeEventListener('click', handleSave);
+    document.getElementById('deleteModalBtn').removeEventListener('click', handleDelete);
+}
+
+// Close modal when clicking "Close" button
+document.getElementById('closeModalBtn').addEventListener('click', closeModal);
 
 
 

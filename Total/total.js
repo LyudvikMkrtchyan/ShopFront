@@ -1,12 +1,8 @@
 document.getElementById('search_btn').addEventListener('click', (event) => {
     const dateDropdown = document.getElementById('dateDropdown');
 
-    if (dateDropdown.style.display === 'none' || dateDropdown.style.display === '') {
-        const rect = event.target.getBoundingClientRect(); // Get button position
-        dateDropdown.style.display = 'block';
-        dateDropdown.style.position = 'absolute';
-        dateDropdown.style.left = `${rect.left}px`; // Align dropdown horizontally
-        dateDropdown.style.top = `${rect.bottom}px`;
+    if (dateDropdown.style.display = "flex") {
+    
 
         // Populate year options dynamically
         const yearSelects = [document.getElementById('startYearSelect'), document.getElementById('endYearSelect')];
@@ -26,7 +22,13 @@ document.getElementById('search_btn').addEventListener('click', (event) => {
     } else {
         dateDropdown.style.display = 'none';
     }
-    event.stopPropagation(); // Prevent click event from propagating further
+    event.stopPropagation();
+    window.addEventListener("click", (event) => {
+        const dateDropdown = document.getElementById('dateDropdown');
+        if (event.target === dateDropdown) {
+            dateDropdown.style.display = 'none'; // Hide the dropdown
+        }
+    }); // Prevent click event from propagating further
 });
 
 // Closing the dropdown
@@ -110,7 +112,6 @@ document.getElementById('withTrans').addEventListener('click', async () => {
 });
 
 document.getElementById('outTrans').addEventListener('click', async () => {
-    modal.style.display = 'flex';
     const Data = getDateRangeData();
     if (!Data) return; // Stop if input is invalid
 
@@ -120,7 +121,6 @@ document.getElementById('outTrans').addEventListener('click', async () => {
     const port = localStorage.getItem('port');
     console.log("aaaaaa");
     console.log(host + ':' + port + ':' + host + ':' + port)
-    //poxenq anun
     const command = 'getFinanceReporteWithoutTransfer';
     const URL = `http://${host}:${port}/${command}`;
 
@@ -138,33 +138,55 @@ document.getElementById('outTrans').addEventListener('click', async () => {
         const data = await response.json();
         console.log('Data received:', data);
 
+        // Remove the 3rd <th> from the header
+        const tableHeaderRow = document.querySelector('#transactionTable thead tr');
+        if (tableHeaderRow && tableHeaderRow.children.length >= 3) {
+            tableHeaderRow.children[2].style.display = 'none';
+        }
+
         // Clear previous rows
         transactionTableBody.innerHTML = '';
 
         // Populate rows
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${data.bankTotal}</td>
-                <td>${data.cashTotal}</td>
-                <td>${0}</td>
-                <td>${data.additationTotal}</td>
-                <td>${data.total}</td>
-            `;
-            transactionTableBody.appendChild(row);
-        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${data.bankTotal}</td>
+            <td>${data.cashTotal}</td>
+            <td>${data.additationTotal}</td>
+            <td>${data.total}</td>
+        `;
+        transactionTableBody.appendChild(row);
 
         // Display the modal
-     
+        modal.style.display = 'flex';
     } catch (error) {
         console.error('Error:', error);
         alert('An error occurred while fetching data');
     }
 });
 
+
+// Close modal logic
 // Close modal logic
 closeModalBtn.addEventListener('click', () => {
+    // Hide modal
     modal.style.display = 'none';
+
+    // Show the 3rd <th> again
+    const tableHeaderRow = document.querySelector('#transactionTable thead tr');
+    if (tableHeaderRow && tableHeaderRow.children.length >= 3) {
+        tableHeaderRow.children[2].style.display = ''; // Reset display to default
+    }
+
+    // Show the 3rd <td> in each row again
+    const tableRows = document.querySelectorAll('#transactionTable tbody tr');
+    tableRows.forEach(row => {
+        if (row.children.length >= 3) {
+            row.children[2].style.display = ''; // Reset display to default
+        }
+    });
 });
+
 
 window.addEventListener('load', () => {
     const modal = document.getElementById('tableModal');

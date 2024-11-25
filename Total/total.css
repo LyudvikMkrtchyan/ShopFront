@@ -2,7 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Noto Sans', sans-serif; /* Supports many languages */
+    
+    
   }
   
   /* Header styles */
@@ -126,7 +128,7 @@
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    margin-left: 10px;
+    text-align: center;
   }
   
   .big .main_part .for_main .search button:hover {
@@ -204,7 +206,40 @@
   font-size: 16px;
   text-align: left;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Makes columns responsive */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  justify-items: end; /* Makes columns responsive */
+}
+@media (max-width: 768px) {
+  #transactionTable {
+    display: flex;
+    flex-direction: column; /* Stack the table rows */
+  }
+
+  #transactionTable th, #transactionTable td {
+    display: block; /* Stack header and cells */
+    text-align: left;
+    padding: 8px 10px;
+  }
+
+  #transactionTable tr {
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+  }
+
+  #transactionTable th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    position: relative;
+    text-align: left;
+  }
+
+  #transactionTable td:before {
+    content: attr(data-label); /* Use the data-label attribute for headers */
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
 }
 
 #transactionTable th, #transactionTable td {
@@ -215,7 +250,16 @@
 
 #transactionTable th {
   background-color: #f4f4f4;
+  padding: 10px 15px;
   font-weight: bold;
+}
+#transactionTable tbody {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  text-align: left;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
 /* Add hover effect on table rows */
@@ -226,20 +270,16 @@
 
 /* Create a pseudo-vertical view: Cells will be stacked vertically */
 #transactionTable td {
-  display: flex;
-  flex-direction: column;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  display: block; /* Make each cell behave as a block element */
 }
 
 /* Separate rows visually, but still keep them in a table-like structure */
-#transactionTable td:before {
-  content: attr(data-label);
-  font-weight: bold;
-  margin-bottom: 5px;
-}
 
-#transactionTable td {
-  padding-left: 0; /* Removes extra space from left */
-}
+
+
+
 
 
 /* Animation for modal appearance */
@@ -258,36 +298,145 @@
 
 
 /* General container for positioning */
+/* Default styles for larger screens */
 .for_main {
   display: flex;
-  justify-content: flex-start; /* Align items to the left, rather than spreading them out */
+  justify-content: flex-start; /* Align items to the left */
   align-items: center; /* Vertically aligns the items */
-  width: 100px; /* Reduces space between child elements of .for_main */
+  gap: 10px; /* Adds a bit of spacing between elements */
+  width: 100%; /* Full-width container */
 }
 
-/* Ensures the date button is at the left */
+/* Search section */
 .search {
   display: flex;
   align-items: center;
-  gap: 5px; /* Reduces space between the date button and dropdown */
+  gap: 10px; /* Spacing between elements */
+  flex-wrap: wrap; /* Allows items to wrap on smaller screens */
 }
 
-/* Buttons section on the right side */
+/* Buttons section */
 .butt {
   display: flex;
-  flex-direction: column; /* Align items vertically */
+  flex-direction: column; /* Vertical alignment */
   justify-content: flex-start; /* Align items to the top */
-  gap: 5px; /* Reduces space between the buttons */
+  gap: 10px; /* Consistent spacing */
 }
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .for_main {
+    flex-direction: column; /* Stack items vertically */
+    align-items: stretch; /* Stretch to fill available width */
+    gap: 8px; /* Adjust spacing for medium screens */
+  }
+
+  .search {
+    flex-direction: column; /* Stack search input and dropdown */
+    gap: 8px; /* Reduce spacing */
+    width: 100%; /* Take full width */
+  }
+
+  .butt {
+    flex-direction: row; /* Align buttons horizontally */
+    gap: 8px; /* Smaller spacing for medium screens */
+    justify-content: center; /* Center buttons */
+  }
+}
+
+@media (max-width: 768px) {
+  .for_main {
+    flex-direction: column; /* Stack items vertically */
+    gap: 5px; /* Compact spacing */
+    width: 100%; /* Full-width container */
+  }
+
+  .search {
+    flex-direction: column; /* Stack elements */
+    gap: 5px; /* Compact spacing */
+    width: 100%; /* Full width */
+  }
+
+  .butt {
+    flex-direction: row; /* Horizontal buttons */
+    gap: 5px; /* Smaller spacing for narrow devices */
+    justify-content: space-around; /* Space out buttons */
+  }
+}
+
+@media (max-width: 480px) {
+  .for_main {
+    flex-direction: column; /* Stack items */
+    align-items: center; /* Center-align for mobile */
+    gap: 5px; /* Compact spacing */
+    width: 100%; /* Full width */
+  }
+
+  .search {
+    flex-direction: column; /* Stack search elements */
+    align-items: stretch; /* Full width for input/button */
+    gap: 5px; /* Compact spacing */
+    width: 100%; /* Full width */
+  }
+
+  .butt {
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 5px; /* Compact spacing */
+    width: 100%; /* Full width */
+    align-items: center; /* Center-align for a better look */
+  }
+}
+
 
 /* Adjust dropdown and buttons for consistent styling */
 #dateDropdown {
-  position: absolute;
-  top: 100%; /* Positions dropdown just below the button */
+  position: fixed;
+  top: 0;
   left: 0;
-  display: none;
-  z-index: 1;
-}
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  display: none; /* Hidden by default */
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  }
+  
+  /* Dropdown content styling */
+  .dropdown-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 400px;
+  width: 90%; /* Responsive width */
+  }
+  
+  /* Select elements spacing */
+  .dropdown-content select {
+  margin: 10px 0;
+  padding: 5px;
+  width: 100%; /* Make select dropdowns full-width */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  }
+  
+  /* Confirm button */
+  #confirmDateBtn {
+  margin: 10px 0;
+  padding: 5px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  margin-top: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  }
+  
+  #confirmDateBtn:hover {
+  background-color: #2a2a2a;
+  }
 
 /* Style the individual buttons */
 button {
@@ -328,12 +477,15 @@ button:hover {
     .big .main_part {
       width: 100%;
       height: auto;
+      display: flex;
+      flex-direction: column; /* Stack the table rows */
     }
   
     .big .main_part .for_main .search input,
     .big .main_part .for_main .search button {
       width: 100%;
       margin-bottom: 10px;
+      
     }
   
     #OrdersTable th, #OrdersTable td {
@@ -418,6 +570,7 @@ button:hover {
     .big .main_part .for_main .search button {
       width: 100%;
       margin-bottom: 10px;
+      flex-direction: column; /* Stack the table rows */
     }
   
     .big .main_part .for_main .for_info {
@@ -438,6 +591,8 @@ button:hover {
       justify-content: space-between;
       gap: 10px;
       margin-top: 20px;
+      display: flex;
+      flex-direction: column; /* Stack the table rows */
     }
   
     .big .main_part .for_main .search input {
@@ -475,7 +630,10 @@ button:hover {
     .big .main_part .for_main .search {
       gap: 8px; /* Smaller gap for small screens */
       margin-top: 10px;
+      display: flex;
+    flex-direction: column; /* Stack the table rows */
     }
+    
   
     .big .main_part .for_main .search input {
       height: 40px;

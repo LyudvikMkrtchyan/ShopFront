@@ -67,24 +67,7 @@
   }
   
   /* Small Button */
-  .a5 {
-    position: absolute;
-    right: 0;
-    bottom: 700px;
-    width: 14%;
-    height: 5vh;
-    background-color: #000000;
-    color: white;
-    font-size: 15px;
-    text-decoration: none;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  }
+  
   
   /* Responsive Styles */
   
@@ -98,16 +81,7 @@
       width: 18%;
       font-size: 24px;
     }
-    .a5 {
-        width: 60%;
-        height: 6vh;
-        font-size: 14px;
-        right: auto; /* Center the button on small screens */
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 300px;
-      }
-      
+    
   }
   
   /* Small Screens (768px and below) */
@@ -127,15 +101,7 @@
       font-size: 22px;
       height: 18vh;
     }
-    .a5 {
-        width: 60%;
-        height: 6vh;
-        font-size: 14px;
-        right: auto; /* Center the button on small screens */
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 300px;
-      }
+    
   }
   
   /* Extra Small Screens (480px and below) */
@@ -154,14 +120,6 @@
       height: 15vh;
     }
   
-    .a5 {
-      width: 60%;
-      height: 6vh;
-      font-size: 14px;
-      right: auto; /* Center the button on small screens */
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 300px;
-    }
+   
   }
   

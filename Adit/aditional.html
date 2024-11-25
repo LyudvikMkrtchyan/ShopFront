@@ -26,10 +26,11 @@
                 </div>
                 <div class='menu_links'>
                     <a class="menu_links_item" href="../Bank/bank.html">BANK</a>
-                    <a class="menu_links_item" href="../Cash/cach.html">CASHE</a>
+                    <a class="menu_links_item" href="../Cash/cach.html">CASH</a>
                     <a class="menu_links_item" href="../Adit/aditional.html">ADITIONAL</a>
                     <a class="menu_links_item" href="../Trans/transaction.html">TRANSFERS</a>
                     <a class="menu_links_item" href="../Total/total.html">TOTAL</a>
+                    <a class="menu_links_item" href="../Calculate/calculate.html">CALCULATION</a>
                 </div>
             </div>
         </div>
@@ -40,53 +41,60 @@
                     <input type="text" id="searchInput" placeholder="SEARCH">
                     <button id="search_btn">DATE</button>
                     <div id="dateDropdown" class="dropdown" style="display: none;">
-                        <!-- Start Month and Year -->
-                        <select id="startMonthSelect">
-                            <option value="" disabled selected>Start Month</option>
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4">April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                        
-                        <select id="startYearSelect">
-                            <option value="" disabled selected>Start Year</option>
-                            <!-- Dynamic year options will be populated here -->
-                        </select>
-                    
-                        <!-- End Month and Year -->
-                        <select id="endMonthSelect">
-                            <option value="" disabled selected>End Month</option>
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4">April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                        
-                        <select id="endYearSelect">
-                            <option value="" disabled selected>End Year</option>
-                            <!-- Dynamic year options will be populated here -->
-                        </select>
-                        
-                        <!-- Confirm button -->
-                        <button id="confirmDateBtn">Confirm</button>
+                        <div class="dropdown-content">
+                          <h3>Select Date Range</h3>
+                      
+                          <!-- Start Month and Year -->
+                          <div>
+                            <select id="startMonthSelect">
+                              <option value="" disabled selected>Start Month</option>
+                              <option value="1">January</option>
+                              <option value="2">February</option>
+                              <option value="3">March</option>
+                              <option value="4">April</option>
+                              <option value="5">May</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
+                            </select>
+                            <select id="startYearSelect">
+                              <option value="" disabled selected>Start Year</option>
+                              <!-- Dynamic year options will be populated here -->
+                            </select>
+                          </div>
+                      
+                          <!-- End Month and Year -->
+                          <div>
+                            <select id="endMonthSelect">
+                              <option value="" disabled selected>End Month</option>
+                              <option value="1">January</option>
+                              <option value="2">February</option>
+                              <option value="3">March</option>
+                              <option value="4">April</option>
+                              <option value="5">May</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
+                            </select>
+                            <select id="endYearSelect">
+                              <option value="" disabled selected>End Year</option>
+                              <!-- Dynamic year options will be populated here -->
+                            </select>
+                          </div>
+                      
+                          <!-- Confirm Button -->
+                            <button id="confirmDateBtn">Confirm</button>
+                        </div>
                     </div>
+                      
                     
 
                     <button id="addTaskBtn">NEW</button>
@@ -106,7 +114,6 @@
                                     <th>Date</th>
                                     <th>Reason</th>
                                     <th>Expense</th>
-                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -114,19 +121,25 @@
                             </tbody>
                         </table>
                         <!-- New Order Modal Table -->
-                        <div class="info">
-                            <table id="NewOrderTable" class="styled-table">
-                                <tbody>
-                                    <tr class="modal">
-                                        <td><input type="text" name="id" placeholder="Career ID"></td>
-                                        <td><input type="date" name="date" placeholder="Date"></td>
-                                        <td><input type="text" name="reason" placeholder="Date1"></td>
-                                        <td><input type="text" name="expense" placeholder="Customer ID"></td> 
-                                        <td><button id="add_table_button">Add</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <!-- Modal for Adding Data -->
+                        <div id="addDataModal" class="modal-container" style="display: none;">
+                            <div class="modal-content">
+                                <h2>Add New Data</h2>
+
+                                <label for="modalDate">Date:</label>
+                                <input type="date" id="modalDate">
+
+                                <label for="modalReason">Reason:</label>
+                                <input type="text" id="modalReason" placeholder="Enter Reason">
+
+                                <label for="modalExpense">Expense:</label>
+                                <input type="text" id="modalExpense" placeholder="Enter Expense">
+
+                                <button id="saveDataBtn">Save</button>
+                                <button id="closeModalBtn">Close</button>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -136,8 +149,25 @@
     </div>
     <div class="total-price-container">
         <strong>Total</strong>
-        <span class="total-price">$0.00</span>
+        <span class="total-price">0.00</span>
     </div>
+
+
+    <!-- Modal Structure -->
+<div id="rowModal" class="modal">
+    <div class="modal-content">
+        <h4>Row Details</h4>
+        <div id="modalData"></div>
+        <div id="modalActions">
+            <button id="saveModalBtn" class="btn">Save</button>
+            <button id="deleteModalBtn" class="btn">Delete</button>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="closeModalBtn" class="modal-close btn">Close</button>
+    </div>
+</div>
+
 
     <script defer src='aditional.js'></script>
 </body>
